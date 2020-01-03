@@ -32,9 +32,11 @@
 {{- range first 1 $postRequest.included -}}
     {{- if eq .type "users" -}}
         {{- $scratch.Set "authorID" .attributes.displayName -}}
+        {{- $scratch.Set "usernameID" .attributes.username -}}
     {{- end -}}
 {{- end -}}
 {{- $forumPostAuthor := $scratch.Get "authorID" -}}
+{{- $forumPostUsername := $scratch.Get "authorID" -}}
 
 {{/* Post Content; truncate if length is set */}}
 {{/* if >= 0, truncate to specified value. If less (-1) do not truncate */}}
@@ -54,7 +56,7 @@
         <a href={{- printf "%s/d/%s/%s" $urlPre (string $discussionID) (string $discussionPostID) -}}>{{- $discussionName -}}</a>
     </div>
     <div class="forum-post-author">
-        {{- $forumPostAuthor -}}
+        <a href={{- printf "%s/u/%s" $urlPre (string $forumPostUsername) -}}>{{- $forumPostAuthor -}}</a>
     </div>
     <div class="forum-post-content">
         {{- $forumPostContent -}}
